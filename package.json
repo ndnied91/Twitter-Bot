@@ -1,0 +1,28 @@
+{
+  "name": "twitter_bot",
+  "version": "1.0.0",
+  "description": "Twitter_Bot",
+  "main": "server.js",
+  "scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "node server.js"
+},
+  "dependencies": {
+    "twitter-lite": "^0.9.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndnied91/twitter_bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ndnied91/twitter_bot/issues"
+  },
+  "homepage": "https://github.com/ndnied91/twitter_bot#readme"
+}
