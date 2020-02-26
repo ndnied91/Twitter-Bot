@@ -27,7 +27,7 @@ const client = new Twitter({
 client
   .get("account/verify_credentials")
   .then(results => {
-    console.log("results", results);
+    console.log("authenticated")
   })
   .catch(console.error);
 
@@ -41,10 +41,9 @@ client
   const stream = client.stream("statuses/filter", parameters)
     .on("start", response => console.log("start"))
     .on("data", tweet => {
-      //here is where the magic happens
       tweet_count++
-      // console.log("data", tweet.text)
-            // console.log(tweet_count)
+      console.log("data", tweet.text)
+      console.log(tweet_count)
     })
     .on("ping", () => console.log("ping"))
     .on("error", error => console.log("error", error))
