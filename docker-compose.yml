@@ -4,6 +4,7 @@ twitter_bot:
   ports:
     - "1234:1234"
     - "8080:8080"
+    - "3000:3000"
   volumes:
     - .:/home/app/twitter_bot
     - /home/app/twitter_bot/node_modules

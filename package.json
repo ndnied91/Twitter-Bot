@@ -12,7 +12,8 @@
     "twitter-lite": "^0.9.4"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "polka": "^0.5.2"
   },
   "repository": {
     "type": "git",

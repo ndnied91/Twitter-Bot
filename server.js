@@ -1,4 +1,6 @@
 const Twitter = require('twitter-lite')
+const polka = require("polka");
+const app = polka();
 
 var tweet_count = 0;
 
@@ -49,4 +51,13 @@ client
     .on("error", error => console.log("error", error))
     .on("end", response => console.log("end"));
 
+  app
+    .get('/twitter', (req, res) => {
+      stream.destroy()
+      res.end("stream closed")
+    })
+    .listen(3000, err => {
+      if(err) throw err
+      console.log("running on 3k")
+    })
       // console.log(tweet_count)

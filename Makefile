@@ -12,3 +12,6 @@ dev:
 
 start:
 	npm run start
+
+stopstream:
+	curl http://localhost:3000/twitter
