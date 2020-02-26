@@ -4,16 +4,16 @@
   "description": "Twitter_Bot",
   "main": "server.js",
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "start": "node server.js"
-},
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "parcel index.html"
+  },
   "dependencies": {
     "twitter-lite": "^0.9.4"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "polka": "^0.5.2"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,8 @@
+twitter_bot:
+  build: .
+  command: npm run start
+  ports:
+    - "3000:3000"
+  volumes:
+    - .:/home/app/twitter_bot
+    - /home/app/twitter_bot/node_modules

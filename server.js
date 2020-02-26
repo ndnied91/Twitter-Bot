@@ -1,4 +1,6 @@
 const Twitter = require('twitter-lite')
+const polka = require("polka");
+const app = polka();
 
 var tweet_count = 0;
 
@@ -27,7 +29,7 @@ const client = new Twitter({
 client
   .get("account/verify_credentials")
   .then(results => {
-    console.log("results", results);
+    console.log("authenticated")
   })
   .catch(console.error);
 
@@ -37,17 +39,33 @@ client
     track: "ronaldo",
   };
 
+  function createStream() {
+    const stream = client.stream("statuses/filter", parameters)
+      .on("start", response => console.log("start"))
+      .on("data", tweet => {
+        tweet_count++
+        console.log("data", tweet.text)
+        console.log(tweet_count)
+      })
+      .on("ping", () => console.log("ping"))
+      .on("error", error => console.log("error", error))
+      .on("end", response => console.log("end"));
+    return stream
+  }
 
-  const stream = client.stream("statuses/filter", parameters)
-    .on("start", response => console.log("start"))
-    .on("data", tweet => {
-      //here is where the magic happens
-      tweet_count++
-      // console.log("data", tweet.text)
-            // console.log(tweet_count)
+  let stream;
+
+  app
+    .get("/create", (req, res) => {
+      stream = createStream()
+      res.end("stream created")
     })
-    .on("ping", () => console.log("ping"))
-    .on("error", error => console.log("error", error))
-    .on("end", response => console.log("end"));
-
+    .get('/destroy', (req, res) => {
+        stream.destroy()
+        res.end("stream closed")
+    })
+    .listen(3000, err => {
+      if(err) throw err
+      console.log("running on 3k")
+    })
       // console.log(tweet_count)
