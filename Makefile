@@ -13,5 +13,8 @@ dev:
 start:
 	npm run start
 
-stopstream:
-	curl http://localhost:3000/twitter
+create:
+	curl http://localhost:3000/create
+
+destroy:
+	curl http://localhost:3000/destroy

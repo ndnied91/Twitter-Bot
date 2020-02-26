@@ -39,22 +39,30 @@ client
     track: "ronaldo",
   };
 
+  function createStream() {
+    const stream = client.stream("statuses/filter", parameters)
+      .on("start", response => console.log("start"))
+      .on("data", tweet => {
+        tweet_count++
+        console.log("data", tweet.text)
+        console.log(tweet_count)
+      })
+      .on("ping", () => console.log("ping"))
+      .on("error", error => console.log("error", error))
+      .on("end", response => console.log("end"));
+    return stream
+  }
 
-  const stream = client.stream("statuses/filter", parameters)
-    .on("start", response => console.log("start"))
-    .on("data", tweet => {
-      tweet_count++
-      console.log("data", tweet.text)
-      console.log(tweet_count)
-    })
-    .on("ping", () => console.log("ping"))
-    .on("error", error => console.log("error", error))
-    .on("end", response => console.log("end"));
+  let stream;
 
   app
-    .get('/twitter', (req, res) => {
-      stream.destroy()
-      res.end("stream closed")
+    .get("/create", (req, res) => {
+      stream = createStream()
+      res.end("stream created")
+    })
+    .get('/destroy', (req, res) => {
+        stream.destroy()
+        res.end("stream closed")
     })
     .listen(3000, err => {
       if(err) throw err
