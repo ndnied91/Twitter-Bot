@@ -6,3 +6,6 @@ Run Container:
 
 Run Program:
     make start
+
+Run Frontend Server:
+    make dev
