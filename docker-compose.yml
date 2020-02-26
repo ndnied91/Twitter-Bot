@@ -1,0 +1,6 @@
+twitter_bot:
+  build: .
+  command: npm run start
+  volumes:
+    - .:/home/app/twitter_bot
+    - /home/app/twitter_bot/node_modules
