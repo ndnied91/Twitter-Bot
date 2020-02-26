@@ -1,5 +1,7 @@
 const Twitter = require('twitter-lite')
 
+var tweet_count = 0;
+
 // API key: 2mBHVx1TSXQXM6HiiFYbdhlyz
 // API secret key: zUiIIO6W7stK1zADcwuB5tMCgkMQiXmGS0J1O0hs7YNkrB3LLN
 
@@ -32,14 +34,20 @@ client
 
 
   const parameters = {
-    track: "trump",
+    track: "ronaldo",
   };
-
 
 
   const stream = client.stream("statuses/filter", parameters)
     .on("start", response => console.log("start"))
-    .on("data", tweet => console.log("data", tweet.text))
+    .on("data", tweet => {
+      //here is where the magic happens
+      tweet_count++
+      // console.log("data", tweet.text)
+            // console.log(tweet_count)
+    })
     .on("ping", () => console.log("ping"))
     .on("error", error => console.log("error", error))
     .on("end", response => console.log("end"));
+
+      // console.log(tweet_count)
