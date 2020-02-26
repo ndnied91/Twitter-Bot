@@ -5,7 +5,7 @@ clean-build:
 	docker-compose build --no-cache
 
 container:
-	docker-compose run --rm twitter_bot bash
+	docker-compose run --rm --service-ports twitter_bot bash
 
-start:
-	npm run start
+dev:
+	npm run dev
