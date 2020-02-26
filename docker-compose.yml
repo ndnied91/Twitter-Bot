@@ -2,8 +2,6 @@ twitter_bot:
   build: .
   command: npm run start
   ports:
-    - "1234:1234"
-    - "8080:8080"
     - "3000:3000"
   volumes:
     - .:/home/app/twitter_bot
