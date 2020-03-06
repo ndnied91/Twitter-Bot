@@ -4,58 +4,24 @@ const app = polka();
 
 var tweet_count = 0;
 
+var twitterLogins = require("./credentials.js")
+var dbconfig = require("./dbconfig.js")
 
 
 //SQL PART
 var mysql = require('mysql');
 
-
-// var con = mysql.createConnection({
-//   host: "imc.kean.edu",
-//   user: "niedzwid",
-//   password: "1014915",
-//   dbname : "2020S_niedzwid"
-// });
-//
-// con.connect(function(err) {
-//   if (err) throw err;
-//   console.log("Connected to SQL Database!");
-//         //https://www.w3schools.com/nodejs/nodejs_mysql.asp
-          //https://www.espn.com/nba/player/_/id/2991350/alex-caruso
-//         //PULLING FROM DATBAASE
-// });
-
-//
-// $server = 'imc.kean.edu';
-// $login = 'niedzwid';
-// $password = '1014915';
-// $dbname = 'CPS3740';
-
-
-
-
-////
-
-// API key: 2mBHVx1TSXQXM6HiiFYbdhlyz
-// API secret key: zUiIIO6W7stK1zADcwuB5tMCgkMQiXmGS0J1O0hs7YNkrB3LLN
-
-// access token 3379767821-K86jLQaVMvFaHpir8Q4usrEbxdVW055ByZfy434
-// access token secret C7waFtUwsMRGe3Ou6jYMEoo1rPFHvwB1ppqQCDeYN34dG
-
-// Consumer Key = API Key
-// Consumer Secret = API Secret
-
-var api_key = "2mBHVx1TSXQXM6HiiFYbdhlyz";
-var api_secret_key = "zUiIIO6W7stK1zADcwuB5tMCgkMQiXmGS0J1O0hs7YNkrB3LLN";
-var access_token = "3379767821-K86jLQaVMvFaHpir8Q4usrEbxdVW055ByZfy434";
-var access_token_secret = "C7waFtUwsMRGe3Ou6jYMEoo1rPFHvwB1ppqQCDeYN34dG"
+// var api_key = "2mBHVx1TSXQXM6HiiFYbdhlyz";
+// var api_secret_key = "zUiIIO6W7stK1zADcwuB5tMCgkMQiXmGS0J1O0hs7YNkrB3LLN";
+// var access_token = "3379767821-K86jLQaVMvFaHpir8Q4usrEbxdVW055ByZfy434";
+// var access_token_secret = "C7waFtUwsMRGe3Ou6jYMEoo1rPFHvwB1ppqQCDeYN34dG"
 
 const client = new Twitter({
   subdomain: "api",
-  consumer_key: api_key, // from Twitter.
-  consumer_secret: api_secret_key, // from Twitter.
-  access_token_key: access_token, // from your User (oauth_token)
-  access_token_secret: access_token_secret // from your User (oauth_token_secret)
+  consumer_key: twitterLogins.api_key, // from Twitter.
+  consumer_secret: twitterLogins.api_secret_key, // from Twitter.
+  access_token_key: twitterLogins.access_token, // from your User (oauth_token)
+  access_token_secret: twitterLogins.access_token_secret // from your User (oauth_token_secret)
 });
 
 client
@@ -68,7 +34,7 @@ client
 
 
   const parameters = {
-    track: "lakers",
+    track: "caruso lakers , alex caruso",
   };
 
   function createStream() {
@@ -129,12 +95,11 @@ pushToDb = (obj) =>{
       console.log(obj)
 
     //  CONNECTING TO THE DATABASE
-
       var con = mysql.createConnection({
-        host: "imc.kean.edu",
-        user: "niedzwid",
-        password: "1014915",
-        database : "2020S_niedzwid"
+        host: dbconfig.host,
+        user: dbconfig.user,
+        password: dbconfig.password,
+        database : dbconfig.database
       });
 
           con.connect(function(err) {
