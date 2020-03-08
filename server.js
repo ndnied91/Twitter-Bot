@@ -7,14 +7,11 @@ var tweet_count = 0;
 var twitterLogins = require("./credentials.js")
 var dbconfig = require("./dbconfig.js")
 
-
 //SQL PART
 var mysql = require('mysql');
+var schedule = require('node-schedule');
+// var stream;
 
-// var api_key = "2mBHVx1TSXQXM6HiiFYbdhlyz";
-// var api_secret_key = "zUiIIO6W7stK1zADcwuB5tMCgkMQiXmGS0J1O0hs7YNkrB3LLN";
-// var access_token = "3379767821-K86jLQaVMvFaHpir8Q4usrEbxdVW055ByZfy434";
-// var access_token_secret = "C7waFtUwsMRGe3Ou6jYMEoo1rPFHvwB1ppqQCDeYN34dG"
 
 const client = new Twitter({
   subdomain: "api",
@@ -34,7 +31,8 @@ client
 
 
   const parameters = {
-    track: "caruso lakers , alex caruso",
+    // track: "caruso lakers , alex caruso",
+    track: "trump",
   };
 
   function createStream() {
@@ -51,29 +49,33 @@ client
     return stream
   }
 
-  let stream;
+
+let stream;
+
+
 
   app
     .get("/create", (req, res) => {
       stream = createStream()
       res.end("stream created")
     })
+
     .get('/destroy', (req, res) => {
-        stream.destroy()
+                  // callDestroy() , if this is called , record will duplicate
+                  stream.destroy()
 
-        res.end("stream closed")
+                  res.end("stream closed")
 
 
-        const followercount = client.get("users/show", {
-            screen_name: "ACFresh21"
-            }).then((result)=>{
+                    const followercount = client.get("users/show", {
+                        screen_name: "ACFresh21"
+                      }).then((result)=>{
 
-              var obj = {  tweet_count : tweet_count,followers : result.followers_count }
-                pushToDb(obj)
+                          var obj = {  tweet_count : tweet_count,followers : result.followers_count }
+                            pushToDb(obj)
           })
 
-
-
+/////////////////////////////////////////////////////
 
 
     })
@@ -119,24 +121,43 @@ pushToDb = (obj) =>{
 }
 
 
+    //SCHEDULE FUNCTIONS
+
+
+//CREATE FUNCTION
+        schedule.scheduleJob('57 * * * *', function(){
+          stream = createStream()
+          console.log('STARTING SCHEDULE');
+          });
+
+
+
+////DESTROY FUNCTION
+        schedule.scheduleJob('58 * * * *', function(){
+            callDestroy()
+            });
 
 
 
 
 
+//ADDITIONAL FUNCTIONS
+
+          callDestroy = () =>{
+            stream.destroy()
+            console.log('finishing stream...')
+            console.log('attempting to push into db...')
+
+            const followercount = client.get("users/show", {
+                screen_name: "ACFresh21"
+                }).then((result)=>{
+
+                  var obj = {  tweet_count : tweet_count,followers : result.followers_count }
+                    pushToDb(obj)
+              })
 
 
-
-
-
-
-
-
-
-
-
-
-
+  }
 
 
 

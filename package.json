@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "mysql": "^2.18.1",
+    "node-schedule": "^1.3.2",
     "twitter-lite": "^0.9.4"
   },
   "devDependencies": {
