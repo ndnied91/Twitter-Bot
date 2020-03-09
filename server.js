@@ -13,6 +13,7 @@ var schedule = require('node-schedule');
 // var stream;
 
 
+
 const client = new Twitter({
   subdomain: "api",
   consumer_key: twitterLogins.api_key, // from Twitter.
@@ -31,8 +32,8 @@ client
 
 
   const parameters = {
-    // track: "caruso lakers , alex caruso",
-    track: "trump",
+    track: "caruso lakers , alex caruso",
+    // track: "trump",
   };
 
   function createStream() {
@@ -121,19 +122,41 @@ pushToDb = (obj) =>{
 }
 
 
-    //SCHEDULE FUNCTIONS
+//SCHEDULE FUNCTIONS
+//est to gmt
+//8:30PM to 12:30AM
+//GMT IS 4 HOURS AHEAD
+
+// var scheduleDate = new Date( 2020, 2, 9, 12, 40, 0);
+// console.log(scheduleDate)
+//
+// var endTime = new Date( 2020, 2, 9, 12, 40, 1);
+// console.log(scheduleDate)
+
+// var scheduleDate = new Date( 2020, 2, 9, 0, 34, 0);
+// console.log(scheduleDate)
+//
+// schedule.scheduleJob( scheduleDate , function(){
+//   console.log('STARTING SCHEDULE');
+//   });
+
+var scheduleDate = {hour: 0, minute: 43}   //REMEMBER TO CONVERT TO GMT
+var endTime = {hour: 0, minute: 43}       //REMEMBER TO CONVERT TO GMT
+    //TIME OF GAME PLUS 4 HOURS
 
 
-//CREATE FUNCTION
-        schedule.scheduleJob('57 * * * *', function(){
+
+        schedule.scheduleJob(scheduleDate, function(){
           stream = createStream()
           console.log('STARTING SCHEDULE');
           });
 
 
 
+
+
 ////DESTROY FUNCTION
-        schedule.scheduleJob('58 * * * *', function(){
+        schedule.scheduleJob(endTime, function(){
             callDestroy()
             });
 
